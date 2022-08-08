@@ -22,6 +22,6 @@ Please use VueJS and Typescript to create the reactive user-interface for this a
 Please use NPM to install add packages and to provide the means to run each project in a test environment.
 
 ## Completion and Delivery
-Please deliver a compressed ZIP file including both completed projects with instructions for running each project so the app may be evaluated in a test environment.
+Please commit the changes in your branch and create a pull request for review.
 
 Thank you for your interest in working with MCG Strategic. We look forward to evaluating your work. Please direct all questions to joe.mcgarvey@mcgstrategic.com.	
