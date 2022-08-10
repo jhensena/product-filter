@@ -1,7 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { AttributeKey } from './attribute-key.entity';
-import { CustomEntity } from './custom.entity';
-import { Product } from './product.entity';
+import { AttributeKey, Product } from '~/entities';
+import { CustomEntity } from '../custom.entity';
 
 @Entity({
   name: 'product_attribute'
@@ -13,7 +12,7 @@ export class ProductAttribute extends CustomEntity {
   })
   productId: number;
 
-  @ManyToOne(() => Product, { eager: true })
+  @ManyToOne(() => Product)
   @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
   product: Product;
 

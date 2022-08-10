@@ -12,7 +12,7 @@ import {
 
 const { DATABASE_HOST, DATABASE_PORT, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME } = process.env;
 
-export const AppDataSource = new DataSource({
+export const connection = new DataSource({
   type: 'postgres',
   host: DATABASE_HOST,
   port: +(DATABASE_PORT || 5432),
@@ -29,6 +29,8 @@ export const AppDataSource = new DataSource({
     ProductCategory,
     ProductManufacturer
   ],
-  synchronize: !true,
+  synchronize: false,
   logging: false
 });
+
+export const { manager } = connection;

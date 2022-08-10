@@ -1,7 +1,6 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { CustomEntity } from './custom.entity';
-import { Manufacturer } from './manufacturer.entity';
-import { Product } from './product.entity';
+import { Manufacturer, Product } from '~/entities';
+import { CustomEntity } from '../custom.entity';
 
 @Entity({
   name: 'product_manufacturer'
@@ -13,7 +12,7 @@ export class ProductManufacturer extends CustomEntity {
   })
   productId: number;
 
-  @ManyToOne(() => Product, { eager: true })
+  @ManyToOne(() => Product)
   @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
   product: Product;
 
@@ -23,7 +22,7 @@ export class ProductManufacturer extends CustomEntity {
   })
   manufacturerId: number;
 
-  @ManyToOne(() => Manufacturer, { eager: true })
+  @ManyToOne(() => Manufacturer)
   @JoinColumn({ name: 'manufacturer_id', referencedColumnName: 'id' })
   manufacturer: Manufacturer;
 }

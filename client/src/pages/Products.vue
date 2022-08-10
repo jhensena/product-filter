@@ -1,5 +1,25 @@
 <script setup lang="ts">
-import ProductCard from '../components/shared/product/Card.vue'
+import ProductCard from '../components/shared/product/Card.vue';
+import { useProducts } from '../composables';
+
+const { products, attributes, selectedProductAttributes, selectedManafacturers } = useProducts();
+
+const manufacturerPrefix = ':manufacturer:'
+
+const onCheckboxChange = (event: InputEvent) => {
+  const { checked, value } = event.target as HTMLInputElement
+
+  const isManufacturer = value.startsWith(manufacturerPrefix)
+  const selectedRef = isManufacturer ? selectedManafacturers : selectedProductAttributes;
+  const selectedValue = isManufacturer ? value.replace(manufacturerPrefix, '') : value
+
+  if (checked) {
+    selectedRef.value.push(selectedValue)
+  } else {
+    const index = selectedRef.value.indexOf(selectedValue)
+    index > -1 && selectedRef.value.splice(index);
+  }
+}
 </script>
 
 <template>
@@ -7,58 +27,18 @@ import ProductCard from '../components/shared/product/Card.vue'
     <h1 class="uk-heading-small">Product Filtering Programming Test</h1>
     <div class="uk-flex uk-flex-wrap uk-flex-wrap-around">
       <div class="uk-width-1-4">
-        <h3>6 Products Found</h3>
+        <h3>{{ products.length }} Products Found</h3>
         <ul class="uk-list">
-          <li>
-            <strong>Manufacturer</strong>
+          <li v-for="{ categoryAttribute: { displayName, id }, productAttributes } in attributes" :key="id">
+            <strong>{{ displayName }}</strong>
             <ul class="uk-list">
-              <li>
-                <base-checkbox label="Iams" />
-              </li>
-              <li>
-                <base-checkbox label="Hills Science Diet" />
-              </li>
-            </ul>
-          </li>
-          <li>
-            <strong>Bag Weight (lbs.)</strong>
-            <ul class="uk-list">
-              <li>
-                <base-checkbox label="7" />
-              </li>
-              <li>
-                <base-checkbox label="15" />
-              </li>
-              <li>
-                <base-checkbox label="30" />
-              </li>
-            </ul>
-          </li>
-          <li>
-            <strong>Breed Size</strong>
-            <ul class="uk-list">
-              <li>
-                <base-checkbox label="Small" />
-              </li>
-              <li>
-                <base-checkbox label="Medium" />
-              </li>
-              <li>
-                <base-checkbox label="Large" />
-              </li>
-            </ul>
-          </li>
-          <li>
-            <strong>Age</strong>
-            <ul class="uk-list">
-              <li>
-                <base-checkbox label="Adult" />
-              </li>
-              <li>
-                <base-checkbox label="Mature" />
-              </li>
-              <li>
-                <base-checkbox label="Puppy" />
+              <li v-for="productAttribute in productAttributes">
+                <base-checkbox :label="productAttribute.attributeValue" :value="productAttribute.attributeValue"
+                  :disabled="!productAttribute.enabled" v-if="'attributeValue' in productAttribute"
+                  @change.stop="onCheckboxChange" />
+                <base-checkbox v-else :label="productAttribute.displayName"
+                  :value="`${manufacturerPrefix}${productAttribute.id}`" :disabled="!productAttribute.enabled"
+                  @change.stop="onCheckboxChange" />
               </li>
             </ul>
           </li>
@@ -66,7 +46,9 @@ import ProductCard from '../components/shared/product/Card.vue'
       </div>
       <div class="uk-width-3-4">
         <ul class="uk-list">
-          <ProductCard />
+          <li v-for="product in products" :key="product.id">
+            <ProductCard :product="product" />
+          </li>
         </ul>
       </div>
     </div>

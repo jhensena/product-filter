@@ -13,7 +13,10 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "composite": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "allowJs": true,
+    "types": ["vue/ref-macros"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "typings", "vite.config.ts"]
 }

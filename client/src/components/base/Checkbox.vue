@@ -4,6 +4,6 @@ defineProps({ label: { type: String, required: true } });
 
 <template>
   <label>
-    <input class="uk-checkbox" type="checkbox"> {{ label }}
+    <input class="uk-checkbox" type="checkbox" v-bind="$attrs"> {{ label }}
   </label>
 </template>

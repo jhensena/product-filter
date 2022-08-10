@@ -1,5 +1,5 @@
 import { Column, Entity } from 'typeorm';
-import { CustomEntity } from './custom.entity';
+import { CustomEntity } from '~/entities';
 
 @Entity({
   name: 'manufacturer'
